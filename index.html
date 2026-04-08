@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardCraft • Professional Cards by Toybur</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Playfair+Display:wght@700&amp;display=swap');
+        
+        :root {
+            --tw-color-primary: #10b981;
+        }
+        
+        .tailwind-ready * {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #10b981 0%, #22d3ee 100%);
+        }
+        
+        .card-preview {
+            box-shadow: 25px 25px 50px -12px rgb(16 185 129 / 0.25);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-35deg);
+            font-size: 4.5rem;
+            font-weight: 900;
+            opacity: 0.07;
+            pointer-events: none;
+            color: #10b981;
+            letter-spacing: 0.5em;
+            white-space: nowrap;
+            z-index: 1;
+            text-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+        }
+        
+        .floating-emoji {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-25px); }
+        }
+        
+        .template-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .template-card:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 25px 50px -12px rgb(16 185 129 / 0.3);
+        }
+        
+        .preview-container {
+            background: linear-gradient(145deg, #f8fafc, #e0f2f1);
+            border: 8px solid #10b981;
+            border-radius: 20px;
+            padding: 12px;
+            box-shadow: inset 0 0 60px rgba(16, 185, 129, 0.15);
+        }
+    </style>
+</head>
+<body class="tailwind-ready bg-slate-50 text-slate-800">
+    <!-- NAVBAR -->
+    <nav class="bg-white border-b border-emerald-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-emerald-500 text-white rounded-2xl flex items-center justify-center text-3xl shadow-inner">📇</div>
+                <h1 class="text-3xl font-bold tracking-tighter text-emerald-600">CardCraft</h1>
+                <span class="text-xs font-medium bg-emerald-100 text-emerald-700 px-3 py-1 rounded-3xl flex items-center gap-1">
+                    ✨ by Toybur
+                </span>
+            </div>
+            
+            <div class="flex items-center gap-8 text-sm font-medium">
+                <a onclick="navigateToSection('templates')" class="hover:text-emerald-600 flex items-center gap-1 transition-colors">
+                    <span>🪄</span> Templates
+                </a>
+                <a onclick="navigateToSection('creator')" class="hover:text-emerald-600 flex items-center gap-1 transition-colors">
+                    <span>✍️</span> Create Card
+                </a>
+                <a href="#" onclick="showExamples()" class="hover:text-emerald-600 flex items-center gap-1 transition-colors">
+                    <span>🌟</span> Examples
+                </a>
+                <div class="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-5 h-10 rounded-3xl text-sm font-semibold">
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                    LIVE PREVIEW
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <div class="text-xs flex items-center gap-1 bg-white border border-emerald-200 px-4 h-9 rounded-3xl shadow-inner">
+                    <span class="text-emerald-500">👋</span>
+                    Welcome, Toybur!
+                </div>
+                <button onclick="downloadWholeSite()" 
+                        class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-3xl text-sm font-semibold transition-all active:scale-95">
+                    <span>💾</span> 
+                    Save this site
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION with light stickers & emojis -->
+    <header id="hero" class="hero-bg text-white py-16 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+                <div class="inline-flex items-center gap-3 bg-white/20 backdrop-blur-lg text-white text-sm font-medium px-6 h-10 rounded-3xl mb-4">
+                    ✨ Made with love by Toybur ✨
+                </div>
+                
+                <h1 class="text-6xl md:text-7xl font-bold leading-none tracking-tighter">
+                    Create Professional<br>Business Cards in<br>Seconds 📇
+                </h1>
+                
+                <p class="text-2xl font-light text-white/90 max-w-lg">
+                    Shop cards • Personal ID • Freelancer cards • Student cards<br>
+                    Upload photo • Unique original designs • Download PNG instantly
+                </p>
+                
+                <div class="flex items-center gap-4">
+                    <button onclick="navigateToSection('creator')" 
+                            class="bg-white text-emerald-700 hover:bg-emerald-100 font-semibold px-10 py-5 rounded-3xl text-xl flex items-center gap-3 shadow-2xl">
+                        Start Creating Now 
+                        <span class="text-4xl">🚀</span>
+                    </button>
+                    
+                    <div class="text-white/80 text-sm max-w-[180px]">
+                        Trusted by 12,458+ happy users<br>
+                        <span class="flex gap-1 text-2xl">⭐⭐⭐⭐⭐</span>
+                    </div>
+                </div>
+                
+                <div class="flex gap-8 text-sm">
+                    <div class="flex items-center gap-2">
+                        <span class="text-4xl">🏪</span>
+                        <div>
+                            Shop Cards<br>
+                            <span class="font-medium">Instant branding</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-4xl">💻</span>
+                        <div>
+                            Freelancer Cards<br>
+                            <span class="font-medium">Online presence</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-4xl">🎓</span>
+                        <div>
+                            Student ID Cards<br>
+                            <span class="font-medium">School ready</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Floating stickers & preview card -->
+            <div class="relative hidden md:block">
+                <div class="absolute -top-6 -left-6 text-7xl floating-emoji" style="animation-delay: 0s;">📇</div>
+                <div class="absolute top-12 -right-8 text-7xl floating-emoji" style="animation-delay: 1.5s;">🏷️</div>
+                <div class="absolute bottom-12 left-12 text-6xl floating-emoji" style="animation-delay: 3s;">✨</div>
+                <div class="absolute top-1/3 right-20 text-5xl floating-emoji" style="animation-delay: 2.2s;">🌟</div>
+                <div class="absolute -bottom-4 right-6 text-8xl floating-emoji" style="animation-delay: 0.8s;">🪄</div>
+                
+                <!-- Mini preview in hero -->
+                <div class="preview-container mx-auto w-80 scale-90">
+                    <div class="bg-white rounded-3xl p-6 relative overflow-hidden" style="box-shadow: 15px 15px 30px -10px rgb(16 185 129);">
+                        <div class="watermark text-emerald-300 text-4xl">ORIGINAL</div>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <div class="text-emerald-600 font-bold text-xl">Toybur Store</div>
+                                <div class="text-slate-600 text-sm">Owned by Toybur</div>
+                                <div class="mt-6 space-y-1 text-sm">
+                                    <div class="flex items-center gap-2">📱 <span class="font-medium">+880 17XX-XXXXXX</span></div>
+                                    <div class="flex items-center gap-2">📍 <span class="font-medium">Khulna, Bangladesh</span></div>
+                                </div>
+                            </div>
+                            <div class="w-20 h-20 bg-emerald-100 rounded-2xl flex items-center justify-center text-4xl flex-shrink-0">🛒</div>
+                        </div>
+                        <div class="text-[10px] text-slate-400 text-center mt-6 border-t pt-3">Made with ❤️ by Toybur • CardCraft</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- TEMPLATES SECTION -->
+    <section id="templates" class="max-w-7xl mx-auto px-6 py-20">
+        <div class="flex justify-between items-end mb-10">
+            <div>
+                <span class="uppercase text-emerald-600 text-sm font-bold tracking-[2px]">CHOOSE YOUR STYLE</span>
+                <h2 class="text-5xl font-bold tracking-tight">Pick a card type</h2>
+            </div>
+            <p class="max-w-xs text-slate-500">Every card comes with photo upload, beautiful background stamp &amp; original design</p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6" id="template-grid">
+            <!-- Populated by JS -->
+        </div>
+    </section>
+
+    <!-- CREATOR SECTION -->
+    <section id="creator" class="bg-white py-20 border-t-2 border-b-2 border-emerald-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-4xl font-bold">Build your card live</h2>
+                <div id="current-template-badge" 
+                     class="px-6 py-2 bg-emerald-100 text-emerald-700 rounded-3xl text-lg font-semibold flex items-center gap-2">
+                    <!-- JS filled -->
+                </div>
+            </div>
+            
+            <div class="grid lg:grid-cols-12 gap-10">
+                <!-- FORM -->
+                <div class="lg:col-span-5 bg-slate-50 border border-slate-200 rounded-3xl p-8">
+                    <h3 class="text-xl font-semibold mb-6 flex items-center gap-2">
+                        <span>📝</span> Fill your details
+                    </h3>
+                    
+                    <!-- Photo Upload -->
+                    <div class="mb-8">
+                        <label class="block text-sm font-medium text-slate-600 mb-2">Upload your photo or logo 📸</label>
+                        <div onclick="document.getElementById('photo-upload').click()" 
+                             class="border-2 border-dashed border-emerald-300 hover:border-emerald-500 rounded-3xl h-36 flex flex-col items-center justify-center cursor-pointer transition-colors">
+                            <input type="file" id="photo-upload" accept="image/*" class="hidden" onchange="handlePhotoUpload(event)">
+                            <div id="photo-placeholder" class="text-7xl mb-2">📸</div>
+                            <p class="text-emerald-600 font-medium text-sm">Click to upload • JPG, PNG, WebP</p>
+                            <p id="photo-name" class="text-xs text-slate-400 mt-1">No file chosen</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <!-- Dynamic fields -->
+                        <div>
+                            <label id="label-input1" class="block text-sm font-medium text-slate-600 mb-1">Primary Name / Shop Name</label>
+                            <input id="input1" type="text" placeholder="Your shop or name" 
+                                   class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 text-lg focus:outline-none focus:border-emerald-400 transition-colors"
+                                   onkeyup="liveUpdatePreview()">
+                        </div>
+                        
+                        <div>
+                            <label id="label-input2" class="block text-sm font-medium text-slate-600 mb-1">Secondary / Title</label>
+                            <input id="input2" type="text" placeholder="Owner / Profession / Class" 
+                                   class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 text-lg focus:outline-none focus:border-emerald-400 transition-colors"
+                                   onkeyup="liveUpdatePreview()">
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-6">
+                            <div>
+                                <label id="label-phone" class="block text-sm font-medium text-slate-600 mb-1">Mobile Number 📱</label>
+                                <input id="phone" type="tel" placeholder="+880 1XXX-XXXXXX" 
+                                       class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 text-lg focus:outline-none focus:border-emerald-400 transition-colors"
+                                       onkeyup="liveUpdatePreview()">
+                            </div>
+                            <div>
+                                <label id="label-input3" class="block text-sm font-medium text-slate-600 mb-1">Address / Info</label>
+                                <input id="input3" type="text" placeholder="Address or extra detail" 
+                                       class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 text-lg focus:outline-none focus:border-emerald-400 transition-colors"
+                                       onkeyup="liveUpdatePreview()">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label id="label-input4" class="block text-sm font-medium text-slate-600 mb-1">Extra Information (optional)</label>
+                            <input id="input4" type="text" placeholder="Email / ID / Website / Skills" 
+                                   class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-4 text-lg focus:outline-none focus:border-emerald-400 transition-colors"
+                                   onkeyup="liveUpdatePreview()">
+                        </div>
+                    </div>
+                    
+                    <div class="mt-10 flex gap-4">
+                        <button onclick="resetForm()" 
+                                class="flex-1 border border-slate-300 hover:bg-slate-100 font-medium py-5 rounded-3xl text-slate-700">
+                            Reset Form
+                        </button>
+                        <button onclick="downloadCard()" 
+                                class="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold py-5 rounded-3xl flex items-center justify-center gap-3 text-xl shadow-inner">
+                            <span>📥</span> DOWNLOAD PNG
+                        </button>
+                    </div>
+                    
+                    <p class="text-center text-xs text-slate-400 mt-6">Card will look exactly like real printed card with background stamp</p>
+                </div>
+                
+                <!-- LIVE PREVIEW AREA -->
+                <div class="lg:col-span-7">
+                    <div class="sticky top-8">
+                        <p class="text-emerald-600 text-sm font-medium mb-3 flex items-center gap-2">
+                            <span class="relative flex h-3 w-3">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                            </span>
+                            LIVE PREVIEW • Unique &amp; Original Design
+                        </p>
+                        
+                        <!-- All preview cards (switched by JS) -->
+                        
+                        <!-- SHOP BUSINESS CARD -->
+                        <div id="preview-shop" class="preview-card preview-container">
+                            <div class="bg-white rounded-3xl p-8 relative min-h-[380px] flex flex-col" style="background: linear-gradient(145deg, #f1f8f3, #ffffff);">
+                                <div class="watermark">SHOP</div>
+                                <div class="flex justify-between">
+                                    <div class="flex-1">
+                                        <div id="p-shop-name" class="text-4xl font-bold text-emerald-700 leading-none">Shop Name</div>
+                                        <div id="p-shop-subtitle" class="text-slate-500 mt-1 text-xl">Owner Name</div>
+                                        
+                                        <div class="mt-auto pt-12 space-y-4 text-slate-700">
+                                            <div class="flex gap-3 items-center text-lg">
+                                                <span class="text-2xl">📱</span>
+                                                <span id="p-shop-phone" class="font-medium">+880 17XX-XXXXXX</span>
+                                            </div>
+                                            <div class="flex gap-3 items-center text-lg">
+                                                <span class="text-2xl">📍</span>
+                                                <span id="p-shop-address" class="font-medium">Full Address</span>
+                                            </div>
+                                            <div id="p-shop-extra" class="text-sm text-slate-400">Extra info appears here</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Photo -->
+                                    <div class="w-40 h-40 bg-slate-100 rounded-3xl flex-shrink-0 border-8 border-white shadow-xl overflow-hidden">
+                                        <img id="p-shop-photo" src="" alt="Photo" class="w-full h-full object-cover">
+                                        <div id="p-shop-photo-placeholder" class="w-full h-full flex items-center justify-center text-7xl bg-gradient-to-br from-emerald-100 to-teal-100">🛒</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-[10px] font-medium text-emerald-600/70 text-center mt-auto pt-8 border-t border-dashed">✅ ORIGINAL • Professional Shop Card by Toybur</div>
+                            </div>
+                        </div>
+                        
+                        <!-- PERSONAL ID CARD -->
+                        <div id="preview-personal" class="preview-card preview-container hidden">
+                            <div class="bg-white rounded-3xl p-8 relative min-h-[380px]" style="background: linear-gradient(145d
